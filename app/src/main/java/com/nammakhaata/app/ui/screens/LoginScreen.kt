@@ -1,17 +1,26 @@
 package com.nammakhaata.app.ui.screens
 
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
+//import androidx.compose.ui.text.input.KeyboardType
+//import androidx.compose.ui.text.input.KeyboardOptions
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.activity.ComponentActivity
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController) {
+    val context = LocalContext.current
     var phoneNumber by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -34,7 +43,7 @@ fun LoginScreen(navController: NavController) {
             value = phoneNumber,
             onValueChange = { phoneNumber = it },
             label = { Text("Phone Number") },
-            keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(keyboardType = KeyboardType.Phone),
+            //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -48,7 +57,7 @@ fun LoginScreen(navController: NavController) {
                 val options = PhoneAuthOptions.newBuilder(auth)
                     .setPhoneNumber(phoneNumber)
                     .setTimeout(60L, java.util.concurrent.TimeUnit.SECONDS)
-                    .setActivity(LocalContext.current as ComponentActivity)
+                    .setActivity(context as ComponentActivity)
                     .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                             signInWithPhoneAuthCredential(auth, credential, navController) {

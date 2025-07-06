@@ -7,9 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.nammakhaata.app.data.model.Transaction
 import com.nammakhaata.app.data.model.TransactionTypeConverter
+import com.nammakhaata.app.data.model.DateTypeConverter;
 
 @Database(entities = [Transaction::class], version = 1, exportSchema = false)
-@TypeConverters(TransactionTypeConverter::class)
+@TypeConverters(TransactionTypeConverter::class, DateTypeConverter::class) // 👈 add here
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun transactionDao(): TransactionDao

@@ -40,7 +40,7 @@ fun OtpVerificationScreen(
             value = otpCode,
             onValueChange = { otpCode = it },
             label = { Text("OTP Code") },
-            keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(keyboardType = KeyboardType.Number),
+            //keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
